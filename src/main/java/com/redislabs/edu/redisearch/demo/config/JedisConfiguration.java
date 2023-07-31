@@ -25,9 +25,11 @@ public class JedisConfiguration {
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(
+        var config = new RedisStandaloneConfiguration(
                 this.redisProperties.getHost(), this.redisProperties.getPort());
-        return new JedisConnectionFactory(config);
+        config.setPassword(this.redisProperties.getPassword());
+        JedisConnectionFactory connectionFactory = new JedisConnectionFactory(config);
+        return connectionFactory;
     }
 
     @Bean
@@ -36,7 +38,7 @@ public class JedisConfiguration {
         template.setConnectionFactory(jedisConnectionFactory());
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new StringRedisSerializer());
-
+        template.setEnableTransactionSupport(true);
         return template;
     }
 

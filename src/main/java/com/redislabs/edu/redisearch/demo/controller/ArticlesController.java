@@ -25,7 +25,8 @@ public class ArticlesController {
                          @RequestParam(name = "-1") Double minPrice,
                          @RequestParam(name = "-1") Double maxPrice) {
 
-        try (var client = new Client("article-idx", jedisCfg.jedisConnectionFactory().getHostName(), jedisCfg.jedisConnectionFactory().getPort())) {
+        try (var client = new Client("article-idx",
+                jedisCfg.jedisConnectionFactory().getHostName(), jedisCfg.jedisConnectionFactory().getPort())) {
             var q  = new Query(query);
             if (minPrice != -1 && maxPrice != -1) {
                 q.addFilter(new Query.NumericFilter("price", minPrice, maxPrice));

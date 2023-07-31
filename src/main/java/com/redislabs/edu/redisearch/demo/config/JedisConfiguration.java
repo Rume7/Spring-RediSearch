@@ -26,7 +26,7 @@ public class JedisConfiguration {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(
-                redisProperties.getHost(), redisProperties.getPort());
+                this.redisProperties.getHost(), this.redisProperties.getPort());
         return new JedisConnectionFactory(config);
     }
 

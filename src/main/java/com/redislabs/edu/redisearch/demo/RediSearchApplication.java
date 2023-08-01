@@ -24,23 +24,20 @@ import static com.redislabs.edu.redisearch.demo.config.JedisConfiguration.getFak
 public class RediSearchApplication {
 
     @Bean
-    CommandLineRunner makeMeSomeData(ArticleRepository articleRepo, //
-                                     AuthorRepository authorRepo, //
-                                     RedisTemplate<String, String> redisTemplate, //
-                                     JedisConnectionFactory cf //
-    ) {
+    CommandLineRunner makeMeSomeData(ArticleRepository articleRepo, AuthorRepository authorRepo,
+                                     RedisTemplate<String, String> redisTemplate, JedisConnectionFactory cf) {
         return args -> {
             if (articleRepo.count() == 0) {
                 var faker = new Faker();
 
-                IntStream.range(0, 250).forEach(n -> {
+                IntStream.range(0, 10).forEach(n -> {
                     var author = new com.redislabs.edu.redisearch.demo.model.Author(null, faker.name().fullName());
                     authorRepo.save(author);
                 });
 
                 var random = new Random();
                 var titles = new HashSet<String>();
-                IntStream.range(0, 2500).forEach(n -> {
+                IntStream.range(0, 100).forEach(n -> {
                     var articleTitle = getFakeArticleTitle(faker);
                     while (titles.contains(articleTitle)) {
                         articleTitle = getFakeArticleTitle(faker);

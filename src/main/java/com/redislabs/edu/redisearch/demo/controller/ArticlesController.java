@@ -22,8 +22,8 @@ public class ArticlesController {
 
     @GetMapping("/search")
     SearchResult search(@RequestParam(name = "q") String query,
-                         @RequestParam(name = "-1") Double minPrice,
-                         @RequestParam(name = "-1") Double maxPrice) {
+                         @RequestParam(defaultValue = "-1") Double minPrice,
+                         @RequestParam(defaultValue = "-1") Double maxPrice) {
 
         try (var client = new Client("article-idx",
                 jedisCfg.jedisConnectionFactory().getHostName(), jedisCfg.jedisConnectionFactory().getPort())) {
